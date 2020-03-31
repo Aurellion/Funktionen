@@ -41,10 +41,10 @@ namespace Funktionen
 
         static Punkt SchnittpunktVonFunktionenBerechnen(LineareFunktion f, LineareFunktion g)
         {
-            Punkt schnittPunkt = new Punkt();
-            schnittPunkt.XKoordinate = (g.YAchsenabschnitt - f.YAchsenabschnitt) / (f.Anstieg - g.Anstieg);
-            schnittPunkt.YKoordinate = f.FunktionswertBestimmen(schnittPunkt.XKoordinate);
-            return schnittPunkt;            
+            Punkt SchnittPunkt = new Punkt();
+            SchnittPunkt.XKoordinate = (g.YAchsenabschnitt - f.YAchsenabschnitt) / (f.Anstieg - g.Anstieg);
+            SchnittPunkt.YKoordinate = f.FunktionswertBestimmen(SchnittPunkt.XKoordinate);
+            return SchnittPunkt;            
         }
 
         static Punkt? VielleichtSchnittpunktVonFunktionenBestimmen(LineareFunktion f, LineareFunktion g)
@@ -171,6 +171,15 @@ namespace Funktionen
             return SPy;
         }
 
+        //public void WertetabelleAusgeben()
+        //{
+            
+        //}
+
+        //public double[] WertetabelleErstellen()
+        //{
+            
+        //}
 
     }
 }
