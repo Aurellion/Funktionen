@@ -8,13 +8,13 @@ namespace Funktionen
         {
             Console.WriteLine("Punkte:");
             Punkt p1 = new Punkt();
-            Console.WriteLine("p1: x="+p1.xKoordinate + " y="+p1.yKoordinate);
-            p1.xKoordinate = 5;
-            p1.yKoordinate = 3;
-            Console.WriteLine("p1: x=" + p1.xKoordinate + " y=" + p1.yKoordinate);
+            Console.WriteLine("p1: x="+p1.XKoordinate + " y="+p1.YKoordinate);
+            p1.XKoordinate = 5;
+            p1.YKoordinate = 3;
+            Console.WriteLine("p1: x=" + p1.XKoordinate + " y=" + p1.YKoordinate);
             Console.WriteLine(p1.ToString());
             Punkt p2 = new Punkt(5, 4);
-            Console.WriteLine("p2: x=" + p2.xKoordinate + " y=" + p2.yKoordinate);
+            Console.WriteLine("p2: x=" + p2.XKoordinate + " y=" + p2.YKoordinate);
             LineareFunktion f1 = new LineareFunktion(2, 1);
             Console.WriteLine("f1: " + f1.ToString());
             Console.WriteLine("Nullstelle von f1: "+f1.NullstelleBerechnen());
@@ -36,21 +36,22 @@ namespace Funktionen
             Console.WriteLine("f3: " + f3.ToString());
             Console.WriteLine(LageVonFunktionenBestimmen(f1,f2));
 
+            Console.ReadKey();
         }
 
         static Punkt SchnittpunktVonFunktionenBerechnen(LineareFunktion f, LineareFunktion g)
         {
             Punkt schnittPunkt = new Punkt();
-            schnittPunkt.xKoordinate = (g.yAchsenabschnitt - f.yAchsenabschnitt) / (f.anstieg - g.anstieg);
-            schnittPunkt.yKoordinate = f.FunktionswertBestimmen(schnittPunkt.xKoordinate);
+            schnittPunkt.XKoordinate = (g.YAchsenabschnitt - f.YAchsenabschnitt) / (f.Anstieg - g.Anstieg);
+            schnittPunkt.YKoordinate = f.FunktionswertBestimmen(schnittPunkt.XKoordinate);
             return schnittPunkt;            
         }
 
         static Punkt? VielleichtSchnittpunktVonFunktionenBestimmen(LineareFunktion f, LineareFunktion g)
         {
-            if (f.anstieg == g.anstieg)
+            if (f.Anstieg == g.Anstieg)
             {
-                if (f.yAchsenabschnitt == g.yAchsenabschnitt)
+                if (f.YAchsenabschnitt == g.YAchsenabschnitt)
                 {                    
                     return null;
                 }
@@ -68,9 +69,9 @@ namespace Funktionen
 
         static string LageVonFunktionenBestimmen(LineareFunktion f, LineareFunktion g)
         {
-            if (f.anstieg == g.anstieg)
+            if (f.Anstieg == g.Anstieg)
             {
-                if (f.yAchsenabschnitt == g.yAchsenabschnitt)
+                if (f.YAchsenabschnitt == g.YAchsenabschnitt)
                 {
                     return "Die Funktionen sind identisch.";
                 }
@@ -89,92 +90,84 @@ namespace Funktionen
     public class Punkt
     {
         //Eigenschaften (oeffentlich oder privat)
-        public double xKoordinate { get; set; }
-        public double yKoordinate { get; set; }
+        public double XKoordinate { get; set; }
+        public double YKoordinate { get; set; }
 
         //Konstruktor
         public Punkt()
         {
-            xKoordinate = 0;
-            yKoordinate = 0;
+            XKoordinate = 0;
+            YKoordinate = 0;
         }
         public Punkt(double x0, double y0)
         {
-            xKoordinate = x0;
-            yKoordinate = y0;
+            XKoordinate = x0;
+            YKoordinate = y0;
         }
 
         //Methoden 
         public override string ToString()
         {
-            string k;
-            k = "x:" + xKoordinate.ToString() + ", y:" + yKoordinate.ToString();
-            return k;
+            return "x:" + XKoordinate.ToString() + ", y:" + YKoordinate.ToString();
         }
     }
 
     public class LineareFunktion
     {
         //y=f(x)=m*x+n
+        //y=f(x)=Anstieg * x + YAchsenabschnitt
 
         //Eigenschaften
-        public double anstieg { get; set; }
-        public double yAchsenabschnitt { get; set; }
+        public double Anstieg { get; set; }
+        public double YAchsenabschnitt { get; set; }
 
         //Konstruktor
         public LineareFunktion()
         {
-            anstieg = 1;
-            yAchsenabschnitt = 0;
+            Anstieg = 1;
+            YAchsenabschnitt = 0;
         }
 
         public LineareFunktion(double m0, double n0)
         {
-            anstieg = m0;
-            yAchsenabschnitt = n0;
+            Anstieg = m0;
+            YAchsenabschnitt = n0;
         }
 
         public LineareFunktion(Punkt p1, Punkt p2)
         {
-            anstieg = (p2.yKoordinate - p1.yKoordinate) / (p2.xKoordinate - p1.xKoordinate);
-            yAchsenabschnitt = p2.yKoordinate - anstieg * p2.xKoordinate;
+            Anstieg = (p2.YKoordinate - p1.YKoordinate) / (p2.XKoordinate - p1.XKoordinate);
+            YAchsenabschnitt = p2.YKoordinate - Anstieg * p2.XKoordinate;
         }
 
         //Methoden
         public override string ToString()
-        {
-            string s;
-            s = "y=f(x)=" + anstieg + "x+" + yAchsenabschnitt;
-            return s;
+        {            
+            if(Anstieg == 0 && YAchsenabschnitt==0) return "y=f(x)=0";
+            else if (Anstieg == 0) return "y=f(x)=" + YAchsenabschnitt;
+            else if (YAchsenabschnitt == 0) return "y=f(x)=" + Anstieg + "x";
+            else return "y=f(x)=" + Anstieg + "x+" + YAchsenabschnitt;
         }
 
         public double FunktionswertBestimmen(double x0)
-        {
-            double fw;
-            fw = anstieg * x0 + yAchsenabschnitt;
-            return fw;
+        {            
+            return Anstieg * x0 + YAchsenabschnitt;
         }
 
         public double NullstelleBerechnen()
         {
-            double nst;
-            nst = -yAchsenabschnitt / anstieg;
-            return nst;
+            return -YAchsenabschnitt / Anstieg;
         }
 
         public Punkt SchnittpunktXAchseBerechnen()
         {
-            Punkt SPx = new Punkt();
-            SPx.yKoordinate = 0;
-            SPx.xKoordinate = NullstelleBerechnen();
+            Punkt SPx = new Punkt( NullstelleBerechnen(), 0);            
             return SPx;
         }
 
         public Punkt SchnittpunktYAchseBerechnen()
         {
-            Punkt SPy = new Punkt();
-            SPy.xKoordinate = 0;
-            SPy.yKoordinate = yAchsenabschnitt;
+            Punkt SPy = new Punkt(0, YAchsenabschnitt);
             return SPy;
         }
 
