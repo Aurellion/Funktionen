@@ -23,6 +23,7 @@ namespace Funktionen
             LineareFunktion f2= new LineareFunktion(2,2);
             Console.WriteLine("f2: " + f2.ToString());
             Console.WriteLine("f2(0)=" + f2.FunktionswertBestimmen(0));
+
             if (VielleichtSchnittpunktVonFunktionenBestimmen(f1, f2) == null)
             {
                 Console.WriteLine("Es gibt keinen Schnittpunkt.");
@@ -31,10 +32,14 @@ namespace Funktionen
             {
                 Console.WriteLine("Schnittpunkt der Funktionen f1 und f2 bei " + VielleichtSchnittpunktVonFunktionenBestimmen(f1, f2).ToString());
             }            
+
             Punkt p3 = new Punkt();
             LineareFunktion f3 = new LineareFunktion(p1, p3);
             Console.WriteLine("f3: " + f3.ToString());
             Console.WriteLine(LageVonFunktionenBestimmen(f1,f2));
+
+            LineareFunktion f7 = new LineareFunktion(2,3);
+            f7.WertetabelleAusgeben();
 
             Console.ReadKey();
         }
@@ -51,14 +56,7 @@ namespace Funktionen
         {
             if (f.Anstieg == g.Anstieg)
             {
-                if (f.YAchsenabschnitt == g.YAchsenabschnitt)
-                {                    
-                    return null;
-                }
-                else
-                {                   
-                    return null;
-                }
+                return null;
             }
             else
             {
@@ -171,15 +169,26 @@ namespace Funktionen
             return SPy;
         }
 
-        //public void WertetabelleAusgeben()
-        //{
-            
-        //}
+        public void WertetabelleAusgeben()
+        {            
+            Console.WriteLine("x | f(x)");
+            for (int i = -3; i < 4; i++)
+            {
+                Console.WriteLine(i + " | " + FunktionswertBestimmen(i));
+            }
+        }
 
-        //public double[] WertetabelleErstellen()
-        //{
-            
-        //}
+        public double[] WertetabelleErstellen()
+        {
+            //x| -3     -2    -1    0    1    2    3
+            //y| f(-3)  f(-2) f(-1) f(0) f(1) f(2) f(3)
+            double[] Tabelle = new double[7];
+            for (int i = -3; i < 4; i++)
+            {
+                Tabelle[i] = FunktionswertBestimmen(i);
+            }
+            return Tabelle;
+        }
 
     }
 }
